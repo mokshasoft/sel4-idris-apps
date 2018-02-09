@@ -8,7 +8,7 @@ See "LICENSE_BSD2.txt" for details.
 
 module Main
 
-import seL4
+import seL4.seL4
 
 (>>) : Monad m => m a -> m b -> m b
 m >> k = m >>= \_ => k
