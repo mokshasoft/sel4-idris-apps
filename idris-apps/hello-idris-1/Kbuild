@@ -6,16 +6,17 @@
 # See "LICENSE_BSD2.txt" for details.
 #
 
-apps-$(CONFIG_APP_HELLO_IDRIS_1) += hello-idris-1
+APP_NAME := hello-idris-1
+apps-$(CONFIG_APP_HELLO_IDRIS_1) += $(APP_NAME)
 
 # Set up variables for the Idris compilation
-APP_DIR := ./apps/hello-idris-1
+APP_DIR := $(SEL4_APPS_PATH)/$(APP_NAME)
 IDRIS_FILES := $(wildcard $(APP_DIR)/src/*.idr)
-IDRIS_APP_BUILD_DIR = $(BUILD_BASE)/hello-idris-1
-IDRIS_GENERATED_APP_SRC = $(IDRIS_APP_BUILD_DIR)/hello-idris-1.c
+IDRIS_APP_BUILD_DIR := $(BUILD_BASE)/$(APP_NAME)
+IDRIS_GENERATED_APP_SRC := $(IDRIS_APP_BUILD_DIR)/$(APP_NAME).c
 
 # Compile the Idris code to C
-hello-idris-1.c: $(IDRIS_FILES)
+$(APP_NAME).c: $(IDRIS_FILES)
 	@echo "Compiling Idris code to C..."
 	$(Q)mkdir -p $(IDRIS_APP_BUILD_DIR)
 	$(Q)idris \
@@ -25,7 +26,7 @@ hello-idris-1.c: $(IDRIS_FILES)
 		$(APP_DIR)/src/Main.idr
 
 # Libraries needed by the app
-hello-idris-1-y = \
+$(APP_NAME)-y = \
     common \
     libsel4 \
     libmuslc \
@@ -37,7 +38,7 @@ hello-idris-1-y = \
     libsel4debug
 
 # App
-hello-idris-1: \
+$(APP_NAME): \
     kernel_elf \
-    $(hello-idris-1-y) \
-    hello-idris-1.c
+    $($(APP_NAME)-y) \
+    $(APP_NAME).c
