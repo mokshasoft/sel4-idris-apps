@@ -14,10 +14,10 @@ APP_DIR := $(SEL4_APPS_PATH)/$(APP_NAME)
 IDRIS_FILES := $(wildcard $(APP_DIR)/src/*.idr)
 IDRIS_APP_BUILD_DIR := $(BUILD_BASE)/$(APP_NAME)
 IDRIS_GENERATED_APP_SRC := $(IDRIS_APP_BUILD_DIR)/$(APP_NAME).c
-IDRIS_LIBS_DIRS := $(SEL4_LIBS_PATH)/idris-libsel4-ffi/src
+IDRIS_LIBS_DIRS := $(BUILD_BASE)/idris-libsel4-ffi
 
 # Compile the Idris code to C
-$(APP_NAME).c: $(IDRIS_FILES)
+$(APP_NAME).c: seL4.idr $(IDRIS_FILES)
 	@echo "Compiling Idris code to C..."
 	$(Q)mkdir -p $(IDRIS_APP_BUILD_DIR)
 	$(Q)idris \
