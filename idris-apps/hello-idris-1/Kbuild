@@ -13,19 +13,26 @@ apps-$(CONFIG_APP_HELLO_IDRIS_1) += $(APP_NAME)
 APP_DIR := $(SEL4_APPS_PATH)/$(APP_NAME)
 IDRIS_FILES := $(wildcard $(APP_DIR)/src/*.idr)
 IDRIS_APP_BUILD_DIR := $(BUILD_BASE)/$(APP_NAME)
-IDRIS_GENERATED_APP_SRC := $(IDRIS_APP_BUILD_DIR)/$(APP_NAME).c
-IDRIS_LIBS_DIRS := $(BUILD_BASE)/idris-libsel4-ffi
+IDRIS_GENERATED_APP_C := $(IDRIS_APP_BUILD_DIR)/$(APP_NAME).c
+
+# Variables needed to import the Idris module seL4.seL4
+SEL4_FFI_BUILD_DIR := $(BUILD_BASE)/idris-libsel4-ffi
+SEL4_IDR := $(SEL4_FFI_BUILD_DIR)/seL4/seL4.idr
 
 # Compile the Idris code to C
-$(APP_NAME).c: seL4.idr $(IDRIS_FILES)
+$(IDRIS_GENERATED_APP_C): $(SEL4_IDR) $(IDRIS_FILES)
 	@echo "Compiling Idris code to C..."
 	$(Q)mkdir -p $(IDRIS_APP_BUILD_DIR)
 	$(Q)idris \
 		--ibcsubdir $(IDRIS_APP_BUILD_DIR) \
 		--idrispath $(APP_DIR)/src \
-		$(addprefix --idrispath ,$(IDRIS_LIBS_DIRS)) \
-		--codegen C --codegenonly -o $(IDRIS_GENERATED_APP_SRC) \
+		--codegen C --codegenonly -o $(IDRIS_GENERATED_APP_C) \
+		--idrispath $(SEL4_FFI_BUILD_DIR) $(SEL4_IDR) \
 		$(APP_DIR)/src/Main.idr
+
+# Create a target that only generates the C code
+.PHONY: $(APP_NAME).c
+$(APP_NAME).c: $(IDRIS_GENERATED_APP_C)
 
 # Libraries needed by the app
 $(APP_NAME)-y = \
@@ -43,4 +50,4 @@ $(APP_NAME)-y = \
 $(APP_NAME): \
     kernel_elf \
     $($(APP_NAME)-y) \
-    $(APP_NAME).c
+    $(IDRIS_GENERATED_APP_C)
