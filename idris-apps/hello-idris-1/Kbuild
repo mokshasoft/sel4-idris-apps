@@ -19,7 +19,7 @@ IDRIS_GENERATED_APP_C := $(IDRIS_APP_BUILD_DIR)/$(APP_NAME).c
 SEL4_FFI_BUILD_DIR := $(BUILD_BASE)/idris-libsel4-ffi
 
 # Compile the Idris code to C
-$(IDRIS_GENERATED_APP_C): idris-libsel4-ffi $(IDRIS_FILES)
+$(IDRIS_GENERATED_APP_C): $(SEL4_FFI_BUILD_DIR)/00libsel4ffi-idx.ibc $(IDRIS_FILES)
 	@echo "[IDRIS] transcompiling to $@"
 	$(Q)mkdir -p $(IDRIS_APP_BUILD_DIR)
 	$(Q)idris \
@@ -27,7 +27,7 @@ $(IDRIS_GENERATED_APP_C): idris-libsel4-ffi $(IDRIS_FILES)
 		--idrispath $(APP_DIR)/src \
 		--codegen C --codegenonly -o $(IDRIS_GENERATED_APP_C) \
 		--idrispath $(SEL4_FFI_BUILD_DIR) \
-		$(patsubst $(PWD)/%,%,$(wildcard $(SEL4_FFI_BUILD_DIR)/seL4/*.idr)) \
+		$(SEL4_FFI_BUILD_DIR)/00libsel4ffi-idx.ibc \
 		$(APP_DIR)/src/Main.idr
 
 # Create a target that only generates the C code
