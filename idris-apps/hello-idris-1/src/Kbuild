@@ -1,0 +1,25 @@
+#
+# Copyright 2018, Mokshasoft AB (mokshasoft.com)
+#
+# This software may be distributed and modified according to the terms of
+# the BSD 2-Clause license. Note that NO WARRANTY is provided.
+# See "LICENSE_BSD2.txt" for details.
+#
+
+# Variables needed to import the Idris module seL4.seL4
+SEL4_FFI_BUILD_DIR := $(BUILD_BASE)/idris-libsel4-ffi
+
+# Compile the Idris code to C
+$(BUILD_BASE)/hello-idris-1/hello-idris-1.c: \
+    $(SEL4_FFI_BUILD_DIR)/00libsel4ffi-idx.ibc \
+    $(patsubst $(PWD)/%,%,$(wildcard $(SEL4_APPS_PATH)/hello-idris-1/src/*.idr))
+	@echo "[IDRIS] transcompiling to $@"
+	$(Q)mkdir -p $(dir $@)
+	$(Q)idris \
+		--ibcsubdir $(dir $@) \
+		--codegen C --codegenonly -o $@ \
+		--idrispath $(SEL4_FFI_BUILD_DIR) \
+		$^
+
+# Create a target that only generates the C code
+hello-idris-1.c.gen: $(BUILD_BASE)/hello-idris-1/hello-idris-1.c
