@@ -27,4 +27,4 @@ hello-idris-1-y = \
 # App
 hello-idris-1: \
     kernel_elf \
-    $(hello-idris-1-y) \
+    $(hello-idris-1-y)
