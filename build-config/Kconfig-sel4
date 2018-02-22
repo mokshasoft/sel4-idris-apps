@@ -25,6 +25,7 @@ endmenu
 
 menu "seL4 Applications"
     source "apps/hello-idris-1/Kconfig"
+    source "apps/hello-idris-2/Kconfig"
 endmenu
 
 menu "seL4 Libraries"
