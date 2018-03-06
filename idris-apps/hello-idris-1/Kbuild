@@ -22,6 +22,7 @@ hello-idris-1-y = \
     libutils \
     libsel4utils \
     libsel4debug \
+    libidris-libsel4-ffi \
     $(BUILD_BASE)/hello-idris-1/hello-idris-1.c
 
 # App

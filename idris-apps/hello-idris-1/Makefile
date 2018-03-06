@@ -23,6 +23,7 @@ LIBS = \
     platsupport \
     sel4vspace \
     sel4-idris-rts \
+    idris-libsel4-ffi \
     utils \
     sel4utils \
     sel4debug

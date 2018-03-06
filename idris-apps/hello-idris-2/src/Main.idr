@@ -13,4 +13,5 @@ import seL4.seL4
 main : IO ()
 main = do
   debugPrint "seL4 <3 Idris #2\n"
-  debugPrintBootInfo createDummyBootInfo
+  info <- seL4_GetBootinfo
+  debugPrintBootInfo info
