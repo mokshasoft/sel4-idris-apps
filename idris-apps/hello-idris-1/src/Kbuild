@@ -7,7 +7,7 @@
 #
 
 # Variables needed to import the Idris module seL4.seL4
-SEL4_FFI_BUILD_DIR := $(BUILD_BASE)/idris-libsel4-ffi
+SEL4_FFI_BUILD_DIR := $(BUILD_BASE)/libidris-libsel4-ffi
 
 # Compile the Idris code to C
 $(BUILD_BASE)/hello-idris-1/hello-idris-1.c: \
