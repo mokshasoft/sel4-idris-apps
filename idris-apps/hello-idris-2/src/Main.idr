@@ -16,5 +16,6 @@ main = do
   info <- seL4_GetBootinfo
   debugPrintBootInfo info
   seL4_Yield
+  seL4_DebugNameThread (cast SeL4_CapInitThreadTCB) "idris rootserver"
   seL4_DebugHalt
   debugPrint "should not be reached..\n"
