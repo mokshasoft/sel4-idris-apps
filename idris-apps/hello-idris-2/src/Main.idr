@@ -12,10 +12,10 @@ import seL4.seL4
 
 main : IO ()
 main = do
-  debugPrint "seL4 <3 Idris #2\n"
-  info <- seL4_GetBootinfo
-  debugPrintBootInfo info
-  seL4_Yield
-  seL4_DebugNameThread (cast SeL4_CapInitThreadTCB) "idris rootserver"
-  seL4_DebugHalt
-  debugPrint "should not be reached..\n"
+    debugPrint "seL4 <3 Idris #2\n"
+    info <- seL4_GetBootinfo
+    debugPrintBootInfo info
+    seL4_Yield
+    seL4_DebugNameThread (cast SeL4_CapInitThreadTCB) "idris rootserver"
+    seL4_DebugHalt
+    debugPrint "should not be reached..\n"
