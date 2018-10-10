@@ -16,4 +16,3 @@ import public seL4.Syscalls
 import public seL4.seL4Debug
 
 %include C "sel4/sel4.h"
-

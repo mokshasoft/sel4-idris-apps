@@ -23,4 +23,3 @@ mapM_ f xs = foldr ((>>) . f) (pure ()) xs
 
 debugPrint : String -> IO ()
 debugPrint str = mapM_ seL4_DebugPutChar (unpack str)
-
