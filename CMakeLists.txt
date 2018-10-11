@@ -10,23 +10,22 @@ cmake_minimum_required(VERSION 3.7.2)
 
 project(hello-world C)
 
-file(GLOB static
-    idris-app/src/build/CMakeFiles/main.c.dir/Main.idr.c # Remove dependency on pre-generated file
-)
+add_subdirectory(idris-app)
 
-add_executable(hello-world EXCLUDE_FROM_ALL ${static})
+# For some reason add_executable needs at least one file...
+add_executable(hello-world EXCLUDE_FROM_ALL dummy.c)
 target_link_libraries(
     hello-world
     Configuration
-    #idris-app-c
-    sel4-idris-rts
+    idris-app
     sel4
     muslc
     utils
     sel4muslcsys
     sel4platsupport
     sel4utils
-    sel4debug)
+    sel4debug
+)
 
 # Build the debug kernel since the Idris app relies on seL4_DebugPutChar
 ApplyCommonReleaseVerificationSettings(FALSE FALSE)
