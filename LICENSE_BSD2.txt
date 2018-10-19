@@ -3,7 +3,6 @@ following license.
 
 -----------------------------------------------------------------------
 
-Copyright (c) 2014 National ICT Australia and other contributors.
 Copyright (c) 2018 Mokshasoft AB (mokshasoft.com)
 All rights reserved.
 
