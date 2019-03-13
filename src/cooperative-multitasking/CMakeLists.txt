@@ -8,9 +8,20 @@
 
 cmake_minimum_required(VERSION 3.7.2)
 
-# Use the BUILD_APP variable to control which app is built
-if("${BUILD_APP}" STREQUAL "cooperative-multitasking")
-    add_subdirectory(cooperative-multitasking)
-else()
-    add_subdirectory(hello-world)
-endif()
+#
+# This project does currently not build since it depends on pthread support in the Idris RTS.
+#
+
+set(name "cooperative-multitasking")
+
+project(${name} C)
+
+file(GLOB static
+    *.idr
+)
+
+idris_app_link_modules(
+    ${name}
+    sel4ffi
+)
+idris_add_app(${name} ${static})
