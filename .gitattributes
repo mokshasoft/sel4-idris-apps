@@ -1,1 +1,2 @@
-build-config/* linguist-vendored
+* linguist-vendored
+*.idr linguist-vendored=false
